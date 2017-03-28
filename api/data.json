@@ -1,0 +1,19 @@
+{
+  "data": [
+    {
+      "product": "Phone",
+      "description": "The latest phone",
+      "cost": 20
+    },
+    {
+      "product": "Watches",
+      "description": "Beautyfully crafted",
+      "cost": 40
+    },
+    {
+      "product": "Television",
+      "description": "Amazing displays",
+      "cost": 60
+    }
+  ]
+}
