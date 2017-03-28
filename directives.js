@@ -23,6 +23,7 @@ angular.module("app").directive("gridScreen",function($http){
         link: function(scope, element, attributes){
             $http.get(attributes.resource).success(function(response){
                 scope.rows = response.data;
+                scope.$broadcast('ready-to-render', scope.rows, scope.cols);
             })
             console.log('grid screen');
         }
@@ -71,6 +72,15 @@ angular.module("app").directive("gridColumn", function(){
 angular.module("app").directive("grid", function(){
     return {
         restrict : "E",
+        templateUrl : "/templates/table.html",
+        replace: true,
+        controller: function ($scope){
+        $scope.$on('ready-to-render', function (e, rows, columns) {
+            console.log(rows , columns);
+
+        })
+        },
+
         link: function(){
             console.log('linked  grid');
         }
