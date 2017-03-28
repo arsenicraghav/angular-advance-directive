@@ -12,10 +12,17 @@
 angular.module("app").directive("gridScreen",function($http){
     return {
         restrict : "E",
+        controller : function ($scope) {
+            this.setEditor = function (editor){
+
+            };
+            this.setColumns = function (cols) {
+                $scope.cols = cols ;
+            };
+        },
         link: function(scope, element, attributes){
             $http.get(attributes.resource).success(function(response){
                 scope.rows = response.data;
-                console.log('success');
             })
             console.log('grid screen');
         }
@@ -25,7 +32,22 @@ angular.module("app").directive("gridScreen",function($http){
 angular.module("app").directive("gridColumns", function(){
     return {
         restrict : "E",
-        link: function(){
+        require : ["^gridScreen","gridColumns"],
+        controller : function ($scope) {
+            var columns = [];
+
+            this.addColumns = function (col){
+                columns.push(col);
+            };
+
+            this.getColumns = function () {
+                return columns;
+            };
+        },
+        link: function(scope, element, attributes, controllers){
+            var gridScreenController  = controllers[0];
+            var gridColumnsController  = controllers[1];
+            gridScreenController.setColumns(gridColumnsController.getColumns());
             console.log('linked gridColumns');
         }
     }
