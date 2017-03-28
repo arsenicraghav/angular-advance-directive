@@ -36,7 +36,7 @@ angular.module("app").directive("gridColumns", function(){
         controller : function ($scope) {
             var columns = [];
 
-            this.addColumns = function (col){
+            this.addColumn = function (col){
                 columns.push(col);
             };
 
@@ -56,7 +56,13 @@ angular.module("app").directive("gridColumns", function(){
 angular.module("app").directive("gridColumn", function(){
     return {
         restrict : "E",
-        link: function(scope, element, attributes){
+        require : "^gridColumns",
+        link: function(scope, element, attributes, gridColumnsController){
+            gridColumnsController.addColumn({
+                title : attributes.title,
+                field : attributes.field
+
+            });
             console.log('linked gridColumn: ' +  attributes.title);
         }
     }
